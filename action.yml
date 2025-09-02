@@ -1,0 +1,16 @@
+name: 'GitHub Runtime'
+description: "GitHub Action to expose GitHub runtime to the workflow"
+author: 'step-security'
+branding:
+  color: 'red'
+  icon: 'eye'
+
+inputs:
+  github-token:
+    description: 'GitHub Token as provided by secrets'
+    default: ${{ github.token }}
+    required: true
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
