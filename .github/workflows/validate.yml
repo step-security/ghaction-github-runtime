@@ -19,13 +19,18 @@ jobs:
     outputs:
       targets: ${{ steps.generate.outputs.targets }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       -
         name: List targets
         id: generate
-        uses: docker/bake-action/subaction/list-targets@v6
+        uses: docker/bake-action/subaction/list-targets@3acf805d94d93a86cce4ca44798a76464a75b88c # v6.9.0
         with:
           target: validate
 
@@ -38,8 +43,13 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.prepare.outputs.targets) }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+
       -
         name: Validate
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@3acf805d94d93a86cce4ca44798a76464a75b88c # v6.9.0
         with:
           targets: ${{ matrix.target }}
