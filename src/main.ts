@@ -1,6 +1,6 @@
-import * as github from './github';
 import * as core from '@actions/core';
 import axios, {isAxiosError} from 'axios';
+import * as github from './github.js';
 
 async function validateSubscription(): Promise<void> {
   const API_URL = `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/subscription`;
